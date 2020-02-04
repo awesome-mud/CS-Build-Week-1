@@ -133,7 +133,6 @@ class World:
                 if room.w_to:
                     directions.append('west')
                 room.description += f"the streets continue to the {str(', ').join(directions)}."
-                print(room.description)
 
 
 
