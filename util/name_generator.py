@@ -1,0 +1,2 @@
+names = ['Andrew', 'Matt', 'Ty', 'John', 'Roger', 'Raine', 'Pratchett', 'Melville', 'Liberty', 'Washington', 'Central', 'Main', 'First', 'Second', 'Third']
+st_types = ['St.', 'Blvd.', 'Ave.', 'Pkwy', 'Square', "Lane", 'Way', 'Rd.']
