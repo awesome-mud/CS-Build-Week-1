@@ -1,2 +1,3 @@
-names = ['Andrew', 'Matt', 'Ty', 'John', 'Roger', 'Raine', 'Pratchett', 'Melville', 'Liberty', 'Washington', 'Central', 'Main', 'First', 'Second', 'Third']
+names = ['Andrew', 'Matt', 'Ty', 'John', 'Roger', 'Raine', 'Pratchett', 'Liberty', 'Washington', 'Central', 'Main', 'Goliath', 'Demona', 'Angela', 'Brookylyn', 'Lexington', 'Broadway', 'Hudson', 'April', 'Shreder', 'Raphael', 'Leonardo', 'Michaelangelo', 'Donatello', 'Splinter', 'Bebop', 'Rocksteady', 'Fry', 'Bender', 'Zoidberg', 'Rocko', 'Dexter', 'Cartman', 'Wakko', 'Stimpy', 'Pinky', 'Taz', 'Chuckie', 'Hank', 'Sonic', 'Batman', 'Joker', 'Godzilla', 'Spiderman', 'Wolverine']
+
 st_types = ['St.', 'Blvd.', 'Ave.', 'Pkwy', 'Square', "Lane", 'Way', 'Rd.']
