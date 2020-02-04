@@ -74,7 +74,7 @@ class World:
             else:
                 x = 0
                 y += 1
-            room = Room(room_count, room_name, "This is a generic room.", x, y, 0)
+            room = Room(room_count, room_name, "As you drive, ", x, y, 0)
             self.grid[y][x] = room
             room_count += 1
 
@@ -119,6 +119,22 @@ class World:
                     if room_direction == 'w':
                         self.grid[y][x].connect_rooms(self.grid[y][x-1], room_direction)
                         self.grid[y][x-1].add_connection()
+
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid[y])):
+                directions = []
+                room = self.grid[y][x]
+                if room.n_to:
+                    directions.append('north')
+                if room.s_to:
+                    directions.append('south')
+                if room.e_to:
+                    directions.append('east')
+                if room.w_to:
+                    directions.append('west')
+                room.description += f"the streets continue to the {str(', ').join(directions)}."
+                print(room.description)
+
 
 
 
