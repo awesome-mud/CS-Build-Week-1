@@ -9,12 +9,12 @@ import random
 from name_generator import names
 from name_generator import st_types
 
-
 class Room:
-    def __init__(self, id, name, description, x, y):
+    def __init__(self, id, name, description, x, y, connections):
         self.id = id
         self.name = name
         self.description = description
+        self.connections = connections
         self.n_to = None
         self.s_to = None
         self.e_to = None
@@ -38,6 +38,8 @@ class Room:
         Connect two rooms in the given n/s/e/w direction
         '''
         return getattr(self, f"{direction}_to")
+    def add_connection(self):
+        self.connections += 1
 
 
 class World:
@@ -72,44 +74,52 @@ class World:
             else:
                 x = 0
                 y += 1
-            room = Room(room_count, room_name, "This is a generic room.", x, y)
+            room = Room(room_count, room_name, "This is a generic room.", x, y, 0)
             self.grid[y][x] = room
             room_count += 1
 
         for y in range(len(self.grid)):
             for x in range(len(self.grid[y])):
-                dir_list = ['n', 'e', 's', 'w']
-                if x == 0:
-                    dir_list.remove('w')
-                elif x == 9:
-                    dir_list.remove('e')
-                if y == 0:
-                    dir_list.remove('s')
-                elif y == 9:
-                    dir_list.remove('n')
+                room = self.grid[y][x]
+                while room.connections < 2:
+                    dir_list = ['n', 'e', 's', 'w']
+                    if x == 0:
+                        dir_list.remove('w')
+                    elif x == 9:
+                        dir_list.remove('e')
+                    if y == 0:
+                        dir_list.remove('s')
+                    elif y == 9:
+                        dir_list.remove('n')
 
-                if self.grid[y][x].n_to:
-                    dir_list.remove('n')
-                if self.grid[y][x].s_to:
-                    dir_list.remove('s')
-                if self.grid[y][x].e_to:
-                    dir_list.remove('e')
-                if self.grid[y][x].w_to:
-                    dir_list.remove('w')
+                    if self.grid[y][x].n_to:
+                        dir_list.remove('n')
+                    if self.grid[y][x].s_to:
+                        dir_list.remove('s')
+                    if self.grid[y][x].e_to:
+                        dir_list.remove('e')
+                    if self.grid[y][x].w_to:
+                        dir_list.remove('w')
 
-                if len(dir_list) == 0:
-                    room_direction = None
-                else:
-                    room_direction = random.choice(list(dir_list))
+                    if len(dir_list) == 0:
+                        room_direction = None
+                    else:
+                        room.add_connection()
+                        room_direction = random.choice(list(dir_list))
 
-                if room_direction == 'n':
-                    self.grid[y][x].connect_rooms(self.grid[y+1][x], room_direction)
-                if room_direction == 's':
-                    self.grid[y][x].connect_rooms(self.grid[y-1][x], room_direction)
-                if room_direction == 'e':
-                    self.grid[y][x].connect_rooms(self.grid[y][x+1], room_direction)
-                if room_direction == 'w':
-                    self.grid[y][x].connect_rooms(self.grid[y][x-1], room_direction)
+                    if room_direction == 'n':
+                        self.grid[y][x].connect_rooms(self.grid[y+1][x], room_direction)
+                        self.grid[y+1][x].add_connection()
+                    if room_direction == 's':
+                        self.grid[y][x].connect_rooms(self.grid[y-1][x], room_direction)
+                        self.grid[y-1][x].add_connection()
+                    if room_direction == 'e':
+                        self.grid[y][x].connect_rooms(self.grid[y][x+1], room_direction)
+                        self.grid[y][x+1].add_connection()
+                    if room_direction == 'w':
+                        self.grid[y][x].connect_rooms(self.grid[y][x-1], room_direction)
+                        self.grid[y][x-1].add_connection()
+
 
 
 
