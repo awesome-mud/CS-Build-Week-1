@@ -9,8 +9,6 @@ import random
 from name_generator import names
 from name_generator import st_types
 
-directions = {"n": "n", "s": "s", "e": "e", "w": "w"}
-
 
 class Room:
     def __init__(self, id, name, description, x, y):
@@ -78,9 +76,46 @@ class World:
             self.grid[y][x] = room
             room_count += 1
 
-        for x in range(len(self.grid)):
-            for y in range(len(self.grid[x])):
-                print(self.grid[x][y].name)
+        for y in range(len(self.grid)):
+            for x in range(len(self.grid[y])):
+                dir_list = ['n', 'e', 's', 'w']
+                if x == 0:
+                    dir_list.remove('w')
+                elif x == 9:
+                    dir_list.remove('e')
+                if y == 0:
+                    dir_list.remove('s')
+                elif y == 9:
+                    dir_list.remove('n')
+
+                if self.grid[y][x].n_to:
+                    dir_list.remove('n')
+                if self.grid[y][x].s_to:
+                    dir_list.remove('s')
+                if self.grid[y][x].e_to:
+                    dir_list.remove('e')
+                if self.grid[y][x].w_to:
+                    dir_list.remove('w')
+
+                if len(dir_list) == 0:
+                    room_direction = None
+                else:
+                    room_direction = random.choice(list(dir_list))
+
+                if room_direction == 'n':
+                    self.grid[y][x].connect_rooms(self.grid[y+1][x], room_direction)
+                if room_direction == 's':
+                    self.grid[y][x].connect_rooms(self.grid[y-1][x], room_direction)
+                if room_direction == 'e':
+                    self.grid[y][x].connect_rooms(self.grid[y][x+1], room_direction)
+                if room_direction == 'w':
+                    self.grid[y][x].connect_rooms(self.grid[y][x-1], room_direction)
+
+
+
+        # if x is 0 cannot go west/ x is 9 cannot go east
+        # if y is 0 cannot go south / y is 9 cannot go north
+
 
         # REBUILD
         # # While there are rooms to be created...
