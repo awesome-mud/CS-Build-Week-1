@@ -20,7 +20,6 @@ def generate_rooms(size_x, size_y, num_rooms):
     y = 0
     room_count = 0
     direction = 1  # 1: east, -1: west
-
     while room_count < num_rooms:
         room_name = f"{random.choice(list(names))} {random.choice(list(st_types))}"
         if x < size_x - 1:
@@ -41,7 +40,6 @@ def generate_rooms(size_x, size_y, num_rooms):
             while connections < 2:
                 x = room.x
                 y = room.y
-
                 dir_list = ['n', 'e', 's', 'w']
                 if x == 0:
                     dir_list.remove('w')
@@ -51,7 +49,6 @@ def generate_rooms(size_x, size_y, num_rooms):
                     dir_list.remove('s')
                 elif y == 9:
                     dir_list.remove('n')
-
                 if room.n_to != 0:
                     connections += 1
                     dir_list.remove('n')
@@ -64,14 +61,11 @@ def generate_rooms(size_x, size_y, num_rooms):
                 if room.w_to != 0:
                     connections += 1
                     dir_list.remove('w')
-
                 if len(dir_list) == 0:
                     room_direction = None
                 else:
                     connections += 1
                     room_direction = random.choice(list(dir_list))
-
-                
                 if room_direction == 'n':
                     rev = reverse_dir[room_direction]
                     connect = grid[y + 1][x]
@@ -96,8 +90,6 @@ def generate_rooms(size_x, size_y, num_rooms):
                     room.connectRooms(
                         connect, room_direction)
                     connect.connectRooms(room, rev)
-                
-
     for y in range(len(grid)):
         for x in range(len(grid[y])):
             directions = []
@@ -111,10 +103,11 @@ def generate_rooms(size_x, size_y, num_rooms):
             if room.w_to:
                 directions.append('west')
             room.description += f"the streets continue to the {str(', ').join(directions)}."
-            room.save()
-    
+            room.save()  
     starting_room = grid[4][4]
     players=Player.objects.all()
     for p in players:
         p.currentRoom=starting_room.id
         p.save()
+
+generate_rooms(10, 10, 100)

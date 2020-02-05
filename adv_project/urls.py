@@ -9,5 +9,4 @@ urlpatterns = [
 ]
 
 
-generate_rooms(10, 10, 100)
 # bring a fucntion that genrates the rooms
